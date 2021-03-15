@@ -4,6 +4,7 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class GregicAdditionsCapabilities {

@@ -18,6 +18,7 @@ import gregicadditions.machines.multi.advance.*;
 import gregicadditions.machines.multi.advance.hyper.HyperReactor;
 import gregicadditions.machines.multi.advance.hyper.HyperReactorUEV;
 import gregicadditions.machines.multi.advance.hyper.HyperReactorUHV;
+import gregicadditions.machines.multi.boiler.BronzeBoiler;
 import gregicadditions.machines.multi.centralmonitor.MetaTileEntityCentralMonitor;
 import gregicadditions.machines.multi.centralmonitor.MetaTileEntityMonitorScreen;
 import gregicadditions.machines.multi.impl.MetaTileEntityRotorHolderForNuclearCoolant;
@@ -177,6 +178,9 @@ public class GATileEntities {
     public static MetaTileEntitySteamItemBus STEAM_OUTPUT_BUS;
     public static MetaTileEntitySteamGrinder STEAM_GRINDER;
     public static MetaTileEntitySteamOven STEAM_OVEN;
+
+    // Boilers
+    public static BronzeBoiler BRONZE_BOILER;
 
     //override from GTCE
     public static List<GAMetaTileEntityEnergyHatch> ENERGY_INPUT_HATCH_4_AMPS = new ArrayList<>();
@@ -1175,6 +1179,8 @@ public class GATileEntities {
                 }));
             }
         }
+
+        BRONZE_BOILER = GregTechAPI.registerMetaTileEntity(4211, new BronzeBoiler(location("bronze_boiler")));
     }
 
     public static <T extends MetaTileEntity & ITieredMetaTileEntity> MTE<T> create(int id, T sampleMetaTileEntity) {
