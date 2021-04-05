@@ -91,6 +91,8 @@ public class GARecipeMaps {
     public static final RecipeMap<SimpleRecipeBuilder> DISASSEMBLER_RECIPES;
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ELECTRIC_IMPLOSION_RECIPES;
+    @ZenProperty
+    public static final RecipeMap<HeatExchangerRecipeBuilder> HEAT_EXCHANGER_RECIPES;
 
     static {
         CLUSTER_MILL_RECIPES = new RecipeMap<>("cluster_mill", 1, 1, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder()).setSlotOverlay(false, false, GuiTextures.BENDER_OVERLAY).setProgressBar(GuiTextures.PROGRESS_BAR_BENDING, ProgressWidget.MoveType.HORIZONTAL);
@@ -169,5 +171,11 @@ public class GARecipeMaps {
         ELECTRIC_IMPLOSION_RECIPES = new RecipeMap<>("electric_implosion", 1, 2, 1,
                 2, 0, 0, 0, 0, new SimpleRecipeBuilder()
                 .duration(1).EUt(1500000)); // UHV-tier, 1tick processing time
+        HEAT_EXCHANGER_RECIPES = new RecipeMap<>("heat_exchanger", 0, 1, 0, 0,
+                1, 2, 1, 2, new HeatExchangerRecipeBuilder())
+                .setSlotOverlay(false, false, GuiTextures.INT_CIRCUIT_OVERLAY)
+                .setSlotOverlay(false, true, GuiTextures.FURNACE_OVERLAY)
+                .setSlotOverlay(false, true, true, GuiTextures.VIAL_OVERLAY_1)
+                .setSlotOverlay(true, true, GuiTextures.VIAL_OVERLAY_2);
     }
 }
