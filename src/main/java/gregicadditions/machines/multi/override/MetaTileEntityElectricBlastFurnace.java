@@ -4,6 +4,7 @@ import gregicadditions.GAConfig;
 import gregicadditions.GAUtility;
 import gregicadditions.GAValues;
 import gregicadditions.capabilities.impl.GAMultiblockRecipeLogic;
+import gregicadditions.client.ClientHandler;
 import gregicadditions.item.GAHeatingCoil;
 import gregicadditions.item.GAMetaBlocks;
 import gregtech.api.capability.IEnergyContainer;
@@ -168,6 +169,6 @@ public class MetaTileEntityElectricBlastFurnace extends RecipeMapMultiblockContr
 	@NotNull
 	@Override
 	protected OrientedOverlayRenderer getFrontOverlay() {
-		return Textures.PRIMITIVE_BLAST_FURNACE_OVERLAY;
+		return ClientHandler.BLAST_OVERLAY;
 	}
 }

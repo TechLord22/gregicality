@@ -1,6 +1,7 @@
 package gregicadditions.machines.multi;
 
 import gregicadditions.capabilities.impl.GARecipeMapMultiblockController;
+import gregicadditions.client.ClientHandler;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.recipes.GARecipeMaps;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -79,6 +80,6 @@ public class TileEntityAlloyBlastFurnace extends GARecipeMapMultiblockController
     @NotNull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
-        return Textures.PRIMITIVE_BLAST_FURNACE_OVERLAY;
+        return ClientHandler.BLAST_OVERLAY;
     }
 }
