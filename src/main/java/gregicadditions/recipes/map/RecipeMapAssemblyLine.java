@@ -5,6 +5,7 @@ import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.resources.TextureArea;
 import gregtech.api.gui.widgets.ProgressWidget;
+import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -30,7 +31,7 @@ public class RecipeMapAssemblyLine<R extends RecipeBuilder<R>> extends RecipeMap
 
 	@Override
 	public ModularUI.Builder createUITemplate(DoubleSupplier progressSupplier, IItemHandlerModifiable importItems, IItemHandlerModifiable exportItems, FluidTankList importFluids, FluidTankList exportFluids) {
-		ModularUI.Builder builder = new ModularUI.Builder(GuiTextures.BACKGROUND_EXTENDED, 176, 216) {
+		ModularUI.Builder builder = new ModularUI.Builder(GuiTextures.BACKGROUND_EXTENDED, 176, 166) {
 			@Override
 			public ModularUI.Builder bindPlayerInventory(InventoryPlayer inventoryPlayer) {
 				this.bindPlayerInventory(inventoryPlayer, 134);
@@ -38,7 +39,7 @@ public class RecipeMapAssemblyLine<R extends RecipeBuilder<R>> extends RecipeMap
 			}
 
 		};
-		builder.widget(new ProgressWidget(progressSupplier, 109, 22, 20, 20, this.progressBarTexture, this.moveType));
+		builder.widget(new ProgressWidget(progressSupplier, 115, -5, 20, 20, this.progressBarTexture, this.moveType));
 		this.addInventorySlotGroup(builder, importItems, importFluids, false);
 		this.addInventorySlotGroup(builder, exportItems, exportFluids, true);
 		return builder;
@@ -58,28 +59,34 @@ public class RecipeMapAssemblyLine<R extends RecipeBuilder<R>> extends RecipeMap
 		int[] inputSlotGrid = determineSlotsGrid(itemInputsCount);
 		int itemSlotsToLeft = inputSlotGrid[0];
 		int itemSlotsToDown = inputSlotGrid[1];
-		int startInputsX = isOutputs ? 138 : 101 - itemSlotsToLeft * 18;
+		int startInputsX = 80 - itemSlotsToLeft * 18;
 		int startInputsY = 32 - (int) (itemSlotsToDown / 2.0 * 18);
-		for (int i = 0; i < itemSlotsToDown; i++) {
-			for (int j = 0; j < itemSlotsToLeft; j++) {
-				int slotIndex = i * itemSlotsToLeft + j;
-				addSlot(builder, startInputsX + 18 * j, startInputsY + 18 * i, slotIndex, itemHandler, fluidHandler, invertFluids, isOutputs);
-			}
-		}
-		if (fluidInputsCount > 0 || invertFluids) {
-			if (itemSlotsToDown >= fluidInputsCount) {
-				int startSpecX = isOutputs ? startInputsX + itemSlotsToLeft * 18 : startInputsX - 18;
-				for (int i = 0; i < fluidInputsCount; i++) {
-					addSlot(builder, startSpecX, startInputsY + 18 * i, i, itemHandler, fluidHandler, !invertFluids, isOutputs);
-				}
-			} else {
-				int startSpecY = startInputsY + itemSlotsToDown * 18;
-				int offsetX = isOutputs ? 0 : 18;
-				for (int i = 0; i < fluidInputsCount; i++) {
-					addSlot(builder, startInputsX - offsetX + 18 * i, startSpecY, i, itemHandler, fluidHandler, !invertFluids, isOutputs);
+
+		if (!isOutputs) {
+			// TODO make data item always appear in last slot
+			addDataSlot(builder, startInputsX + 18 * 4, -4, 18, itemHandler); // Data Slot
+			for (int i = 0; i < itemSlotsToDown; i++) {
+				for (int j = 0; j < itemSlotsToLeft; j++) {
+					int slotIndex = i * itemSlotsToLeft + j;
+					addSlot(builder, startInputsX + 18 * j, startInputsY + 18 * i, slotIndex, itemHandler, fluidHandler, invertFluids, isOutputs);
 				}
 			}
+			if (fluidInputsCount > 0 || invertFluids) {
+				if (itemSlotsToDown >= fluidInputsCount) {
+					int startSpecX = startInputsX + 18 * 5;
+					for (int i = 0; i < fluidInputsCount; i++) {
+						addSlot(builder, startSpecX, startInputsY + 18 * i, i, itemHandler, fluidHandler, !invertFluids, isOutputs);
+					}
+				}
+			}
+		} else {
+			addSlot(builder, startInputsX + 18 * 4, -4, 18, itemHandler, fluidHandler, invertFluids, isOutputs); // Output Slot
 		}
+	}
+
+	protected void addDataSlot(ModularUI.Builder builder, int x, int y, int slotIndex, IItemHandlerModifiable itemHandler) {
+		builder.widget((new SlotWidget(itemHandler, slotIndex, x, y, true, true)).setBackgroundTexture(this.getOverlaysForSlot(false, false, true)));
+
 	}
 
 	protected static int[] determineSlotsGrid(int itemInputsCount) {
@@ -97,6 +104,9 @@ public class RecipeMapAssemblyLine<R extends RecipeBuilder<R>> extends RecipeMap
 			//case for 2 inputs - 2 by horizontal and i / 3 by vertical (for 2 slots)
 			itemSlotsToDown = itemInputsCount / 2;
 			itemSlotsToLeft = 2;
+		} else {
+			itemSlotsToDown = 4;
+			itemSlotsToLeft = 4;
 		}
 		return new int[] { itemSlotsToLeft, itemSlotsToDown };
 	}
