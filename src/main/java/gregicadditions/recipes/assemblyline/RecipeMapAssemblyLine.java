@@ -1,4 +1,4 @@
-package gregicadditions.recipes.map;
+package gregicadditions.recipes.assemblyline;
 
 import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.gui.GuiTextures;
@@ -64,7 +64,7 @@ public class RecipeMapAssemblyLine<R extends RecipeBuilder<R>> extends RecipeMap
 
 		if (!isOutputs) {
 			// TODO make data item always appear in last slot
-			addDataSlot(builder, startInputsX + 18 * 4, -4, 18, itemHandler); // Data Slot
+			addDataSlot(builder, startInputsX + 18 * 7, -4 + 18 * 2, 17, itemHandler); // Data Slot
 			for (int i = 0; i < itemSlotsToDown; i++) {
 				for (int j = 0; j < itemSlotsToLeft; j++) {
 					int slotIndex = i * itemSlotsToLeft + j;

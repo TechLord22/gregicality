@@ -3,17 +3,17 @@ package gregicadditions.recipes;
 import crafttweaker.annotations.ZenRegister;
 import gregicadditions.gui.GAGuiTextures;
 import gregicadditions.integrations.exnihilocreatio.SieveRecipeMap;
+import gregicadditions.recipes.assemblyline.RecipeMapAssemblyLine;
+import gregicadditions.recipes.assemblyline.ResearchRecipeBuilder;
 import gregicadditions.recipes.map.LargeRecipeBuilder;
 import gregicadditions.recipes.map.*;
 import gregicadditions.recipes.nuclear.HotCoolantRecipeMap;
-import gregicadditions.recipes.qubit.DataRecipeBuilder;
 import gregicadditions.recipes.qubit.QubitConsumerRecipeBuilder;
 import gregicadditions.recipes.qubit.QubitProducerRecipeBuilder;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
-import gregtech.api.recipes.builders.ImplosionRecipeBuilder;
 import gregtech.api.recipes.builders.IntCircuitRecipeBuilder;
 import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.api.recipes.machines.FuelRecipeMap;
@@ -27,7 +27,7 @@ public class GARecipeMaps {
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> CLUSTER_MILL_RECIPES;
     @ZenProperty
-    public static final RecipeMapAssemblyLine<DataRecipeBuilder> ASSEMBLY_LINE_RECIPES;
+    public static final RecipeMapAssemblyLine<ResearchRecipeBuilder> ASSEMBLY_LINE_RECIPES;
     @ZenProperty
     public static final FuelRecipeMap NAQUADAH_REACTOR_FUELS;
     @ZenProperty
@@ -95,7 +95,7 @@ public class GARecipeMaps {
 
     static {
         CLUSTER_MILL_RECIPES = new RecipeMap<>("cluster_mill", 1, 1, 1, 1, 0, 0, 0, 0, new SimpleRecipeBuilder()).setSlotOverlay(false, false, GuiTextures.BENDER_OVERLAY).setProgressBar(GuiTextures.PROGRESS_BAR_BENDING, ProgressWidget.MoveType.HORIZONTAL);
-        ASSEMBLY_LINE_RECIPES = new RecipeMapAssemblyLine<>("assembly_line", 4, 17, 1, 1, 0, 4, 0, 0, new DataRecipeBuilder()).setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL);
+        ASSEMBLY_LINE_RECIPES = new RecipeMapAssemblyLine<>("assembly_line", 4, 17, 1, 1, 0, 4, 0, 0, new ResearchRecipeBuilder()).setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL);
         ASSEMBLY_LINE_RECIPES.setSlotOverlay(false, false, GuiTextures.MOLD_OVERLAY);
         NAQUADAH_REACTOR_FUELS = new FuelRecipeMap("naquadah_reactor");
         HYPER_REACTOR_FUELS = new FuelRecipeMap("hyper_reactor");
