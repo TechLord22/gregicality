@@ -497,35 +497,38 @@ public class MultiblockCraftingRecipes {
                 'A', MetaTileEntities.HULL[EV].getStackForm(),
                 'C', new UnificationEntry(pipeLarge, Ultimet));
 
-        // Steam Grinder
-        if (GAConfig.multis.steamMultis.useSteelMultis)
+        if (GAConfig.multis.steamMultis.useSteelMultis) {
+            // Steam Grinder
             ModHandler.addShapedRecipe("ga_steam_grinder", STEAM_GRINDER.getStackForm(),
                     "CGC", "CFC", "CGC",
                     'G', new UnificationEntry(gear, Potin),
                     'F', MetaTileEntities.STEAM_MACERATOR_STEEL.getStackForm(),
                     'C', MetaBlocks.METAL_CASING.getItemVariant(STEEL_SOLID));
-        else
-            ModHandler.addShapedRecipe("ga_steam_grinder", STEAM_GRINDER.getStackForm(),
-                    "CGC", "CFC", "CGC",
-                    'G', new UnificationEntry(gear, Potin),
-                    'F', MetaTileEntities.STEAM_MACERATOR_BRONZE.getStackForm(),
-                    'C', new UnificationEntry(gtMetalCasing, Bronze));
 
-        // Steam Oven
-        if (GAConfig.multis.steamMultis.useSteelMultis)
+            // Steam Oven
             ModHandler.addShapedRecipe("ga_steam_oven", STEAM_OVEN.getStackForm(),
                     "CGC", "FMF", "CGC",
                     'F', MetaBlocks.BOILER_FIREBOX_CASING.getItemVariant(STEEL_FIREBOX),
                     'C', MetaBlocks.METAL_CASING.getItemVariant(STEEL_SOLID),
                     'M', MetaTileEntities.STEAM_FURNACE_STEEL.getStackForm(),
                     'G', new UnificationEntry(gear, Invar));
-        else
+        }
+        else {
+            // Steam Grinder
+            ModHandler.addShapedRecipe("ga_steam_grinder", STEAM_GRINDER.getStackForm(),
+                    "CGC", "CFC", "CGC",
+                    'G', new UnificationEntry(gear, Potin),
+                    'F', MetaTileEntities.STEAM_MACERATOR_BRONZE.getStackForm(),
+                    'C', new UnificationEntry(gtMetalCasing, Bronze));
+
+            // Steam Oven
             ModHandler.addShapedRecipe("ga_steam_oven", STEAM_OVEN.getStackForm(),
                     "CGC", "FMF", "CGC",
                     'F', MetaBlocks.BOILER_FIREBOX_CASING.getItemVariant(BRONZE_FIREBOX),
                     'C', new UnificationEntry(gtMetalCasing, Bronze),
                     'M', MetaTileEntities.STEAM_FURNACE_BRONZE.getStackForm(),
                     'G', new UnificationEntry(gear, Invar));
+        }
 
         // Electric Implosion Compressor
         ASSEMBLY_LINE_RECIPES.recipeBuilder().duration(48000).EUt(491520)
