@@ -47,7 +47,7 @@ import java.util.function.Predicate;
 
 import static gregicadditions.GAMaterials.*;
 
-public class TileEntityAdvFusionReactor extends RecipeMapMultiblockController {
+public class MetaTileEntityAdvFusionReactor extends RecipeMapMultiblockController {
 
     private static final MultiblockAbility<?>[] ALLOWED_ABILITIES = {MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS};
 
@@ -65,7 +65,7 @@ public class TileEntityAdvFusionReactor extends RecipeMapMultiblockController {
     private int heat = 0;
 
 
-    public TileEntityAdvFusionReactor(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityAdvFusionReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, GARecipeMaps.ADV_FUSION_RECIPES);
         this.recipeMapWorkable = new AdvFusionRecipeLogic(this);
         this.energyContainer = new GAEnergyContainerHandler(this, Integer.MAX_VALUE, 0, 0, 0, 0) {
@@ -235,7 +235,7 @@ public class TileEntityAdvFusionReactor extends RecipeMapMultiblockController {
 
     @Override
     public MetaTileEntity createMetaTileEntity(MetaTileEntityHolder metaTileEntityHolder) {
-        return new TileEntityAdvFusionReactor(metaTileEntityId);
+        return new MetaTileEntityAdvFusionReactor(metaTileEntityId);
     }
 
     @Override
