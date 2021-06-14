@@ -105,6 +105,7 @@ public class UHVMaterials {
                 .fluidOutputs(SuperheavyMix.getFluid(4000))
                 .EUt(100000000)
                 .duration(40)
+                .blastFurnaceTemp(33700)
                 .buildAndRegister();
 
         FLUID_SOLIDFICATION_RECIPES.recipeBuilder()

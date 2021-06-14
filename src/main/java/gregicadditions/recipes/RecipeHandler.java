@@ -1,6 +1,7 @@
 package gregicadditions.recipes;
 
 import gregicadditions.GAConfig;
+import gregicadditions.GAValues;
 import gregicadditions.item.GAExplosive;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.item.GAMetaItems;
@@ -1090,55 +1091,63 @@ public class RecipeHandler {
                     .ifPresent(recipe -> {
                         ItemStack itemStack = recipe.getOutputs().get(0);
                         IngotMaterial ingot = ((IngotMaterial) (OreDictUnifier.getUnificationEntry(itemStack).material));
-                        int duration = Math.max(1, (int) (ingot.getAverageMass() * ingot.blastFurnaceTemperature / 50L));
+                        int duration = Math.max(1, (int) (ingot.getAverageMass() * ingot.blastFurnaceTemperature / 100));
                         BLAST_ALLOY_RECIPES.recipeBuilder()
-                                .duration(duration * 80 / 100)
-                                .EUt(120 * itemStack.getCount())
+                                .duration(duration * 50 / 100)
+                                .EUt(30 * ingot.blastFurnaceTemperature / 100)
                                 .fluidInputs(recipe.getFluidInputs())
                                 .inputsIngredients(recipe.getInputs())
-                                .fluidOutputs(ingot.getFluid(itemStack.getCount() * GTValues.L)).buildAndRegister();
+                                .fluidOutputs(ingot.getFluid(itemStack.getCount() * GTValues.L))
+                                .blastFurnaceTemp(ingot.blastFurnaceTemperature)
+                                .buildAndRegister();
                     });
         }
 
         // Soldering Alloy
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(775).EUt(1200)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(775).EUt(120)
                 .input(dust, Tin, 9)
                 .input(dust, Antimony)
                 .fluidOutputs(SolderingAlloy.getFluid(L * 10))
+                .blastFurnaceTemp(700)
                 .buildAndRegister();
 
         // Red Alloy
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(473).EUt(240)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(473).EUt(120)
                 .input(dust, Redstone, 3)
                 .input(dust, Copper)
                 .fluidOutputs(RedAlloy.getFluid(L * 4))
+                .blastFurnaceTemp(600)
                 .buildAndRegister();
 
         // Magnalium
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(320).EUt(360)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(320).EUt(120)
                 .input(dust, Aluminium, 2)
                 .input(dust, Magnesium)
                 .fluidOutputs(Magnalium.getFluid(L * 3))
+                .blastFurnaceTemp(900)
                 .buildAndRegister();
 
         // Tin Alloy
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(556).EUt(174)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(556).EUt(120)
                 .input(dust, Tin)
                 .input(dust, Iron)
                 .fluidOutputs(TinAlloy.getFluid(L * 2))
+                .blastFurnaceTemp(600)
                 .buildAndRegister();
 
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(556).EUt(174)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(556).EUt(120)
                 .input(dust, Tin)
                 .input(dust, WroughtIron)
                 .fluidOutputs(TinAlloy.getFluid(L * 2))
+                .blastFurnaceTemp(600)
                 .buildAndRegister();
 
         // Battery Alloy
-        BLAST_ALLOY_RECIPES.recipeBuilder().duration(512).EUt(600)
+        BLAST_ALLOY_RECIPES.recipeBuilder().duration(512).EUt(120)
                 .input(dust, Lead, 4)
                 .input(dust, Antimony)
                 .fluidOutputs(BatteryAlloy.getFluid(L * 5))
+                .blastFurnaceTemp(700)
                 .buildAndRegister();
 
         // Reactor Steel
