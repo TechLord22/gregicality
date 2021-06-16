@@ -1722,8 +1722,14 @@ gtadditions.machine.hull.uev.name=UEV Machine Hull
 gtadditions.machine.hull.uiv.name=UIV Machine Hull
 gtadditions.machine.hull.umv.name=UMV Machine Hull
 gtadditions.machine.hull.uxv.name=UXV Machine Hull
+
+
 gtadditions.machine.drilling_rig.name=Drilling Rig
 gtadditions.machine.solar_fluid_sampler.name=Solar Fluid Sampler
+gtadditions.machine.drilling_plant_mv.name=Fluid Drilling Plant 1
+gtadditions.machine.drilling_plant_hv.name=Fluid Drilling Plant 2
+gtadditions.machine.drilling_plant_ev.name=Fluid Drilling Plant 3
+
 gtadditions.machine.cosmic_ray_detector.name=Cosmic Ray Detector
 
 
@@ -2928,34 +2934,45 @@ gtadditions.multiblock.cosmic_ray_detector.tooltip.6=The top Sensor Block needs 
 
 
 gregtech.multiblock.recipe=Screw to change recipe. Currently using: %s
+
 gregtech.universal.tooltip.efficiency=Efficiency: %s %%
+
 gregtech.multiblock.universal.energy_used=Energy using: %d EU
 gregtech.multiblock.universal.drilling_fluid_amount=Current Drilling Fluid: %.2fmB
 gregtech.multiblock.universal.overheat=Overheated!
+
 gregtech.machine.world_accelerator.mode.tile=Tile Entity Mode
 gregtech.machine.world_accelerator.mode.entity=Entity Mode
+
 gregtech.multiblock.universal.framework=Current Max Tiered Voltage: %d EU/t
 gregtech.multiblock.universal.framework.tooltip=The framework casings define the maximum voltage tier the multiblock is able to run.
+
 gregtech.multiblock.machine.primitive_blast_furnace.industrial.size=Current size: %d
 gregtech.multiblock.machine.primitive_blast_furnace.industrial.fuelUnitsLeft=Fuel Unit Left: %d Units
 gregtech.multiblock.machine.primitive_blast_furnace.industrial.fuelEfficiency=Fuel Efficiency: %d %%
+
 gregtech.multiblock.universal.oxygen_plasma_amount=Oxygen Plasma: %dmb
 gregtech.multiblock.universal.helium_plasma_amount=Helium Plasma: %dmb
 gregtech.multiblock.universal.cryotheum_amount=Cryotheum: %dmb
 gregtech.multiblock.universal.liquid_hydrogen_amount=Liquid Hydrogen: %dmB
 gregtech.multiblock.universal.air_amount=Air: %dmB
 gregtech.multiblock.universal.energy_usage=Current Energy Usage: %d%%
+
 gregtech.multiblock.large_rocket_engine.hydrogen_need=Hydrogen to Boost: %dmB
 gregtech.multiblock.large_rocket_engine.boost=Boosted!
 gregtech.multiblock.large_rocket_engine.no_fuel=No Fuel Loaded
+
 gregtech.multiblock.advanced_distillation_tower.multiplier=Current Multiplier: %d
+
 gregtech.multiblock.large_miner.chunk=Chunk: %d
 gregtech.multiblock.large_miner.nb_chunk=Chunks To Mine: %d
 gregtech.multiblock.large_miner.mode=Screw to change mode.
 gregtech.multiblock.large_miner.block_per_tick=Speed: %d Blocks/tick
 gregtech.multiblock.large_miner.silktouch=Silktouch mode: %s
 gregtech.multiblock.large_miner.done=Done!
+
 gregtech.multiblock.universal.energy_store=%d EU / %d EU
+
 gregtech.multiblock.nuclear_reactor.coolant_needed=Coolant Needed: %d mb/s
 gregtech.multiblock.nuclear_reactor.coolant_ratio=Coolant Ratio: %d
 gregtech.multiblock.nuclear_reactor.not_enough_coolant=Not Enough Coolant!
@@ -2963,26 +2980,40 @@ gregtech.multiblock.nuclear_reactor.base_heat=Heat Produced: %d C/sec
 gregtech.multiblock.nuclear_reactor.additional_temperature=Additional Temperature: %d
 gregtech.multiblock.nuclear_reactor.rod_type=Rod Heat Factor: %d%%
 gregtech.multiblock.nuclear_reactor.produce=Produce Hot Coolant !
+
 gregtech.multiblock.large_transformer.input=Input: %s EU / %s Amps
 gregtech.multiblock.large_transformer.output=Output: %s EU / %s Amps
 gregtech.multiblock.large_transformer.input_average=Amps Input/t: %s
 gregtech.multiblock.large_transformer.output_average=Amps Output/t: %s
+
 gtadditions.multiblock.not_enough_qubit=Not enough Qubits, recipe slowed.
+
 gregicality.multiblock.invalid_configuraion.1=The Advanced Fusion Reactor is setup incorrectly.
 gregicality.multiblock.invalid_configuraion.2=The tier of the Cryostat, Vacuum and/or Divertor casings is lower than the coil tier.
+
 gtadditions.multiblock.drilling_rig.no_fluid=Chunk is Empty
-gtadditions.multiblock.drilling_rig.fluid_drain=Fluid Drain: %dmB/sec
+gtadditions.multiblock.drilling_rig.fluid_drain=Chunk Depletion: %dmB/sec
+gtadditions.multiblock.drilling_rig.rig_production=Rig Production: %dmB/sec
 gtadditions.multiblock.drilling_rig.chunk_capacity=Chunk Capacity: %dB
 gtadditions.multiblock.drilling_rig.chunk_remaining=Chunk Fluid Remaining: %dB
 gtadditions.multiblock.drilling_rig.fluid=Current Fluid: %s
 gtadditions.multiblock.drilling_rig.replenish=Replenish Rate: %dmB/sec
+gtadditions.multiblock.drilling_rig.tooltip.1=Extracts fluids from underground veins. Use a Solar Fluid Sampler or LuV+ prospector to view fluids.
+gtadditions.multiblock.drilling_rig.tooltip.2=Requires §b%s§7 voltage or higher. Overclocks up to §b%s§7.
+gtadditions.multiblock.drilling_rig.tooltip.3=Overclocks significantly increase production and slightly increase depletion.
+gtadditions.multiblock.drilling_rig.tooltip.4=Produces §e%dmB§7 per second at §b%s§7.
+gtadditions.multiblock.drilling_rig.tooltip.5=Depletes veins at §eproduction / %d§7 mB per second.
+
 gtadditions.multiblock.battery_tower.input=EU/t input: %s
 gtadditions.multiblock.battery_tower.output=EU/t output: %s
 gtadditions.multiblock.battery_tower.passive_drain=Passive EU loss per tick: %s
+
 gtadditions.multiblock.blast_furnace.additional_temperature=Additional Temperature: %dK
+
 gtadditions.multiblock.mega_logic.tooltip.1=Max Parallel: §e256
 gtadditions.multiblock.mega_logic.tooltip.2=EU/t Usage: §eParallel Amount * Recipe EU/t * 0.5
 gtadditions.multiblock.mega_logic.tooltip.3=Duration Multiplier: §e%d
+
 gtadditions.multiblock.mega_blast_logic.tooltip.1=EU/t Usage: §eParallel Amount * Recipe EU/t
 gtadditions.multiblock.mega_blast_logic.tooltip.2=Prioritizes Parallel Recipes over Heating Coil Bonuses.
 

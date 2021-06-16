@@ -18,6 +18,7 @@ import gregicadditions.machines.multi.advance.*;
 import gregicadditions.machines.multi.advance.hyper.*;
 import gregicadditions.machines.multi.centralmonitor.MetaTileEntityCentralMonitor;
 import gregicadditions.machines.multi.centralmonitor.MetaTileEntityMonitorScreen;
+import gregicadditions.machines.multi.drill.MetaTileEntityDrillingPlant;
 import gregicadditions.machines.multi.impl.MetaTileEntityRotorHolderForNuclearCoolant;
 import gregicadditions.machines.multi.mega.MetaTileEntityMegaBlastFurnace;
 import gregicadditions.machines.multi.mega.MetaTileEntityMegaDistillationTower;
@@ -165,6 +166,8 @@ public class GATileEntities {
     public static MetaTileEntityQubitComputer QUBIT_COMPUTER;
     public static MetaTileEntityDrillingRig DRILLING_RIG;
     public static MetaTileEntitySolarSampler SOLAR_FLUID_SAMPLER;
+    public static MetaTileEntityDrillingPlant[] DRILLING_PLANT = new MetaTileEntityDrillingPlant[3];
+
     public static MetaTileEntityBioReactor BIO_REACTOR;
     public static TileEntityLargePackager LARGE_PACKAGER;
     public static MetaTileEntityCosmicRayDetector COSMIC_RAY_DETECTOR;
@@ -1203,11 +1206,15 @@ public class GATileEntities {
         MEGA_BLAST_FURNACE = GregTechAPI.registerMetaTileEntity(4229, new MetaTileEntityMegaBlastFurnace(location("mega_blast_furnace")));
         MEGA_VACUUM_FREEZER = GregTechAPI.registerMetaTileEntity(4230, new MetaTileEntityMegaVacuumFreezer(location("mega_vacuum_freezer")));
 
-        INPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4241, new MetaTileEntityMultiFluidHatch(location("multi_fluid_input_4x"), 2, false)));
-        INPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4242, new MetaTileEntityMultiFluidHatch(location("multi_fluid_input_9x"), 3, false)));
+        INPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4231, new MetaTileEntityMultiFluidHatch(location("multi_fluid_input_4x"), 2, false)));
+        INPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4232, new MetaTileEntityMultiFluidHatch(location("multi_fluid_input_9x"), 3, false)));
 
-        OUTPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4243, new MetaTileEntityMultiFluidHatch(location("multi_fluid_output_4x"), 2, true)));
-        OUTPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4244, new MetaTileEntityMultiFluidHatch(location("multi_fluid_output_9x"), 3, true)));
+        OUTPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4233, new MetaTileEntityMultiFluidHatch(location("multi_fluid_output_4x"), 2, true)));
+        OUTPUT_HATCH_MULTI.add(GregTechAPI.registerMetaTileEntity(4234, new MetaTileEntityMultiFluidHatch(location("multi_fluid_output_9x"), 3, true)));
+
+        DRILLING_PLANT[0] = GregTechAPI.registerMetaTileEntity(4235, new MetaTileEntityDrillingPlant(location("drilling_plant_mv"), 2));
+        DRILLING_PLANT[1] = GregTechAPI.registerMetaTileEntity(4236, new MetaTileEntityDrillingPlant(location("drilling_plant_hv"), 3));
+        DRILLING_PLANT[2] = GregTechAPI.registerMetaTileEntity(4237, new MetaTileEntityDrillingPlant(location("drilling_plant_ev"), 4));
     }
 
     public static <T extends MetaTileEntity & ITieredMetaTileEntity> MTE<T> create(int id, T sampleMetaTileEntity) {
