@@ -1,6 +1,5 @@
 package gregicadditions.jei;
 
-import com.google.common.collect.Lists;
 import gregicadditions.jei.multi.*;
 import gregicadditions.jei.multi.advance.*;
 import gregicadditions.jei.multi.miner.LargeMinerInfo;
@@ -44,7 +43,7 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
                 add(new MultiblockInfoRecipeWrapper(new CentralMonitorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new ElectricBlastFurnaceInfo()));
                 add(new MultiblockInfoRecipeWrapper(new CrackerUnitInfo()));
-                add(new MultiblockInfoRecipeWrapper(new DieselEngineInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeCombustionEngineInfo()));
                 add(new MultiblockInfoRecipeWrapper(new DistillationTowerInfo()));
                 add(new MultiblockInfoRecipeWrapper(new ImplosionCompressorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new MultiSmelterInfo()));

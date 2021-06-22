@@ -19,7 +19,8 @@ public class GAFuelRecipeLogic extends FuelRecipeLogic {
             GAFueledMultiblockController gaController = (GAFueledMultiblockController) metaTileEntity;
             if (gaController.hasMaintenanceHatch()) {
                 int numMaintenanceProblems = gaController.getNumProblems();
-                double maintenanceDurationMultiplier = 1.0 + (0.1 * numMaintenanceProblems);
+                System.out.println("numMaintenanceProblems " + numMaintenanceProblems);
+                double maintenanceDurationMultiplier = 1.0 - (0.1 * numMaintenanceProblems);
                 int durationModified = (int) (currentRecipe.getDuration() * maintenanceDurationMultiplier);
 
                 gaController.calculateMaintenance(durationModified);

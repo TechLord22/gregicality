@@ -226,86 +226,84 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
-        if (isStructureFormed()) {
-            if (this.isStructureFormed()) {
-                if (!this.workableHandler.isWorkingEnabled()) {
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
-                } else if (this.workableHandler.isActive()) {
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.generation_eu", this.workableHandler.getRecipeOutputVoltage()));
-                } else {
-                    textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
-                }
+        if (this.isStructureFormed()) {
+            if (!this.workableHandler.isWorkingEnabled()) {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
+            } else if (this.workableHandler.isActive()) {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
+                textList.add(new TextComponentTranslation("gregtech.multiblock.generation_eu", this.workableHandler.getRecipeOutputVoltage()));
+            } else {
+                textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
+            }
 
-                // Maintenance Text
-                if (hasMuffler && !isMufflerFaceFree()) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed")
+            // Maintenance Text
+            if (hasMuffler && !isMufflerFaceFree()) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed.tooltip")))));
+
+            } else if (this.hasProblems()) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.has_problems")
+                        .setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+
+                // Wrench
+                if (((this.maintenance_problems >> 0) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench")
                             .setStyle(new Style().setColor(TextFormatting.RED)
                                     .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed.tooltip")))));
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench.tooltip")))));
+                }
 
-                } else if (this.hasProblems()) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.has_problems")
-                            .setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+                // Screwdriver
+                if (((this.maintenance_problems >> 1) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver")
+                            .setStyle(new Style().setColor(TextFormatting.RED)
+                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver.tooltip")))));
+                }
 
-                    // Wrench
-                    if (((this.maintenance_problems >> 0) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench.tooltip")))));
-                    }
+                // Soft Hammer
+                if (((this.maintenance_problems >> 2) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer")
+                            .setStyle(new Style().setColor(TextFormatting.RED)
+                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer.tooltip")))));
+                }
 
-                    // Screwdriver
-                    if (((this.maintenance_problems >> 1) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver.tooltip")))));
-                    }
+                // Hard Hammer
+                if (((this.maintenance_problems >> 3) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer")
+                            .setStyle(new Style().setColor(TextFormatting.RED)
+                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer.tooltip")))));
+                }
 
-                    // Soft Hammer
-                    if (((this.maintenance_problems >> 2) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer.tooltip")))));
-                    }
+                // Wirecutter
+                if (((this.maintenance_problems >> 4) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter")
+                            .setStyle(new Style().setColor(TextFormatting.RED)
+                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter.tooltip")))));
+                }
 
-                    // Hard Hammer
-                    if (((this.maintenance_problems >> 3) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer.tooltip")))));
-                    }
-
-                    // Wirecutter
-                    if (((this.maintenance_problems >> 4) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter.tooltip")))));
-                    }
-
-                    // Crowbar
-                    if (((this.maintenance_problems >> 5) & 1) == 0) {
-                        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar")
-                                .setStyle(new Style().setColor(TextFormatting.RED)
-                                        .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                                new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar.tooltip")))));
-                    }
-                } else {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.no_problems")
-                            .setStyle(new Style().setColor(TextFormatting.GREEN)));
+                // Crowbar
+                if (((this.maintenance_problems >> 5) & 1) == 0) {
+                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar")
+                            .setStyle(new Style().setColor(TextFormatting.RED)
+                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar.tooltip")))));
                 }
             } else {
-                ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
-                tooltip.setStyle(new Style().setColor(TextFormatting.GRAY));
-                textList.add(new TextComponentTranslation("gregtech.multiblock.invalid_structure")
-                        .setStyle(new Style().setColor(TextFormatting.RED)
-                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.no_problems")
+                        .setStyle(new Style().setColor(TextFormatting.GREEN)));
             }
+        } else {
+            ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
+            tooltip.setStyle(new Style().setColor(TextFormatting.GRAY));
+            textList.add(new TextComponentTranslation("gregtech.multiblock.invalid_structure")
+                    .setStyle(new Style().setColor(TextFormatting.RED)
+                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         }
     }
 

@@ -71,8 +71,8 @@ public class MetaTileEntityHyperReactorII extends FueledMultiblockController { /
     protected void addDisplayText(List<ITextComponent> textList) {
         if (isStructureFormed()) {
             FluidStack booster = importFluidHandler.drain(this.booster, false);
-            FluidStack fuelStack = ((BoostableWorkableHandler) workableHandler).getFuelStack();
-            boolean isBoosted = ((BoostableWorkableHandler) workableHandler).isBoosted();
+            FluidStack fuelStack = ((GABoostableWorkableHandler) workableHandler).getFuelStack();
+            boolean isBoosted = ((GABoostableWorkableHandler) workableHandler).isBoosted();
             int boosterAmount = booster == null ? 0 : booster.amount;
             int fuelAmount = fuelStack == null ? 0 : fuelStack.amount;
 

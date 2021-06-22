@@ -5,6 +5,7 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import com.google.common.collect.Lists;
+import gregicadditions.GAMaterials;
 import gregicadditions.GAUtility;
 import gregicadditions.GAValues;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
@@ -71,6 +72,7 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
     private AtomicInteger currentChunk = new AtomicInteger(0);
     private IEnergyContainer energyContainer;
     private IMultipleTankHandler importFluidHandler;
+    private IMultipleTankHandler exportFluidHandler;
     protected IItemHandlerModifiable outputInventory;
     private List<Chunk> chunks = new ArrayList<>();
     private boolean isActive = false;
@@ -104,23 +106,28 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
 
     private void initializeAbilities() {
         this.importFluidHandler = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
+        this.exportFluidHandler = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
         this.outputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
         this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
     }
 
     private void resetTileAbilities() {
         this.importFluidHandler = new FluidTankList(true);
+        this.exportFluidHandler = new FluidTankList(true);
         this.outputInventory = new ItemStackHandler(0);
         this.energyContainer = new EnergyContainerList(Lists.newArrayList());
     }
 
     public boolean drainEnergy() {
         long energyDrain = GAValues.V[Math.max(GAValues.EV, GAUtility.getTierByVoltage(energyContainer.getInputVoltage()))];
-        FluidStack drillingFluid = Materials.DrillingFluid.getFluid(type.drillingFluidConsumePerTick);
-        FluidStack canDrain = importFluidHandler.drain(drillingFluid, false);
-        if (energyContainer.getEnergyStored() >= energyDrain && canDrain != null && canDrain.amount == type.drillingFluidConsumePerTick) {
+        FluidStack drillingMud = GAMaterials.DrillingMud.getFluid(type.drillingFluidConsumePerTick);
+        FluidStack usedDrillingMud = GAMaterials.UsedDrillingMud.getFluid(type.drillingFluidConsumePerTick);
+        FluidStack canDrain = importFluidHandler.drain(drillingMud, false);
+        int canFill = exportFluidHandler.fill(usedDrillingMud, false);
+        if (energyContainer.getEnergyStored() >= energyDrain && canDrain != null && canDrain.amount == type.drillingFluidConsumePerTick && canFill != 0) {
             energyContainer.removeEnergy(energyContainer.getInputVoltage());
-            importFluidHandler.drain(drillingFluid, true);
+            importFluidHandler.drain(drillingMud, true);
+            exportFluidHandler.fill(usedDrillingMud, true);
             return true;
         }
         return false;
@@ -240,7 +247,7 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("gtadditions.machine.miner.multi.description", type.chunk, type.chunk, type.fortuneString));
-        tooltip.add(I18n.format("gtadditions.machine.miner.fluid_usage", type.drillingFluidConsumePerTick, I18n.format(Materials.DrillingFluid.getFluid(0).getUnlocalizedName())));
+        tooltip.add(I18n.format("gtadditions.machine.miner.fluid_usage", type.drillingFluidConsumePerTick, I18n.format(GAMaterials.DrillingMud.getFluid(0).getUnlocalizedName())));
     }
 
     @Override
