@@ -4,6 +4,7 @@ import gregicadditions.GAUtility;
 import gregicadditions.GAValues;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.item.GAHeatingCoil;
+import gregicadditions.machines.multi.IMaintenance;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMaintenanceHatch;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import gregtech.api.capability.IEnergyContainer;
@@ -36,7 +37,7 @@ import static gregicadditions.capabilities.MultiblockDataCodes.STORE_TAPED;
 import static gregtech.api.gui.widgets.AdvancedTextWidget.withButton;
 import static gregtech.api.gui.widgets.AdvancedTextWidget.withHoverTextTranslate;
 
-public abstract class GARecipeMapMultiblockController extends RecipeMapMultiblockController {
+public abstract class GARecipeMapMultiblockController extends RecipeMapMultiblockController implements IMaintenance {
 
     private final List<ItemStack> recoveryItems = new ArrayList<ItemStack>() {{
         add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Ash));

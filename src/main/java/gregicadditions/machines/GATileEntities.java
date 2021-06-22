@@ -52,7 +52,6 @@ import gregtech.api.render.Textures;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.material.type.SolidMaterial;
-import gregtech.api.util.GTLog;
 import gregtech.common.metatileentities.MetaTileEntities;
 import gregtech.common.metatileentities.electric.MetaTileEntityAirCollector;
 import gregtech.common.metatileentities.electric.MetaTileEntityPump;
@@ -209,7 +208,7 @@ public class GATileEntities {
     public static MetaTileEntityDistillationTower DISTILLATION_TOWER;
     public static MetaTileEntityCrackingUnit CRACKER;
     public static MetaTileEntityMultiFurnace MULTI_FURNACE;
-    public static MetaTileEntityDieselEngine DIESEL_ENGINE;
+    public static MetaTileEntityLargeCombustionEngine DIESEL_ENGINE;
     public static MetaTileEntityPyrolyseOven PYROLYSE_OVEN;
     public static GAMetaTileEntityBatteryBuffer[][] BATTERY_BUFFERS = new GAMetaTileEntityBatteryBuffer[6][4];
     public static GAMetaTileEntityCharger[] CHARGER = new GAMetaTileEntityCharger[6];
@@ -856,7 +855,7 @@ public class GATileEntities {
         DISTILLATION_TOWER = GregTechAPI.registerMetaTileEntity(2537, new MetaTileEntityDistillationTower(location("distillation_tower")));
         CRACKER = GregTechAPI.registerMetaTileEntity(2538, new MetaTileEntityCrackingUnit(location("cracker")));
         MULTI_FURNACE = GregTechAPI.registerMetaTileEntity(2539, new MetaTileEntityMultiFurnace(location("multi_furnace")));
-        DIESEL_ENGINE = GregTechAPI.registerMetaTileEntity(2540, new MetaTileEntityDieselEngine(location("diesel_engine")));
+        DIESEL_ENGINE = GregTechAPI.registerMetaTileEntity(2540, new MetaTileEntityLargeCombustionEngine(location("diesel_engine")));
 
         LARGE_STEAM_TURBINE = GregTechAPI.registerMetaTileEntity(2541, new MetaTileEntityLargeTurbine(location("large_turbine.steam"), MetaTileEntityLargeTurbine.TurbineType.valueOf("STEAM_OVERRIDE")));
         LARGE_GAS_TURBINE = GregTechAPI.registerMetaTileEntity(2542, new MetaTileEntityLargeTurbine(location("large_turbine.gas"), MetaTileEntityLargeTurbine.TurbineType.valueOf("GAS_OVERRIDE")));

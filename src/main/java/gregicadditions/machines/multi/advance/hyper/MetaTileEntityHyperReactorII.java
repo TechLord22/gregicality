@@ -5,6 +5,7 @@ import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.client.ClientHandler;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.item.GAReactorCasing;
+import gregicadditions.machines.multi.GABoostableWorkableHandler;
 import gregicadditions.recipes.impl.BoostableWorkableHandler;
 import gregicadditions.recipes.GARecipeMaps;
 import gregicadditions.utils.GALog;
@@ -62,7 +63,7 @@ public class MetaTileEntityHyperReactorII extends FueledMultiblockController { /
     protected FuelRecipeLogic createWorkable(long maxVoltage) {
         int fuelMultiplier = GAConfig.multis.hyperReactors.boostedFuelAmount[1];
         int euMultiplier = GAConfig.multis.hyperReactors.boostedEuAmount[1];
-        return new BoostableWorkableHandler(this, recipeMap, () -> energyContainer, () -> importFluidHandler,
+        return new GABoostableWorkableHandler(this, recipeMap, () -> energyContainer, () -> importFluidHandler,
                 maxVoltage, booster, fuelMultiplier, euMultiplier);
     }
 
