@@ -130,6 +130,9 @@ public class MetaTileEntityLargeCombustionEngine extends GAFueledMultiblockContr
 		}
 
 		protected boolean checkRecipe(FuelRecipe recipe) {
+			if (!((MetaTileEntityLargeCombustionEngine) this.metaTileEntity).hasProblems())
+				return false;
+
 			FluidStack lubricantStack = Materials.Lubricant.getFluid(2);
 			FluidStack drainStack = this.fluidTank.get().drain(lubricantStack, false);
 			return drainStack != null && drainStack.amount >= 2 || this.currentCycle < 20;

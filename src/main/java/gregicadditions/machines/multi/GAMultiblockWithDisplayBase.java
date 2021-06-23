@@ -3,16 +3,14 @@ package gregicadditions.machines.multi;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMaintenanceHatch;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMufflerHatch;
-import gregtech.api.capability.impl.FuelRecipeLogic;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.multiblock.PatternMatchContext;
-import gregtech.api.recipes.machines.FuelRecipeMap;
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.XSTR;
-import gregtech.common.metatileentities.multi.electric.generator.FueledMultiblockController;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -29,7 +27,7 @@ import java.util.stream.Collectors;
 
 import static gregicadditions.capabilities.MultiblockDataCodes.STORE_TAPED;
 
-public abstract class GAFueledMultiblockController extends FueledMultiblockController implements IMaintenance {
+public abstract class GAMultiblockWithDisplayBase extends MultiblockWithDisplayBase implements IMaintenance {
 
     private final List<ItemStack> recoveryItems = new ArrayList<ItemStack>() {{
         add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Ash));
@@ -46,34 +44,23 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
     // Used for data preservation with Maintenance Hatch
     private boolean storedTaped = false;
 
+    public GAMultiblockWithDisplayBase(ResourceLocation metaTileEntityId) {
+        this(metaTileEntityId, false, true);
+    }
+
+    public GAMultiblockWithDisplayBase(ResourceLocation metaTileEntityId,  boolean hasMuffler, boolean hasMaintenance) {
+        super(metaTileEntityId);
+        this.hasMuffler = hasMuffler;
+        this.hasMaintenance = hasMaintenance;
+        this.maintenance_problems = 0b000000;
+    }
+
     /**
      * This value stores whether each of the 5 maintenance problems have been fixed.
      * A value of 0 means the problem is not fixed, else it is fixed
      * Value positions correspond to the following from left to right: 0=Wrench, 1=Screwdriver, 2=Soft Hammer, 3=Hard Hammer, 4=Wire Cutter, 5=Crowbar
      */
     protected byte maintenance_problems;
-
-    public GAFueledMultiblockController(ResourceLocation metaTileEntityId, FuelRecipeMap recipeMap, long maxVoltage) {
-        this(metaTileEntityId, recipeMap, maxVoltage, false, true);
-
-    }
-
-    public GAFueledMultiblockController(ResourceLocation metaTileEntityId, FuelRecipeMap recipeMap, long maxVoltage, boolean hasMuffler, boolean hasMaintenance) {
-        super(metaTileEntityId, recipeMap, maxVoltage);
-        this.hasMuffler = hasMuffler;
-        this.hasMaintenance = hasMaintenance;
-        this.maintenance_problems = 0b000000;
-        this.workableHandler = this.createWorkable(maxVoltage);
-    }
-
-    @Override
-    protected FuelRecipeLogic createWorkable(long maxVoltage) {
-        return new GAFuelRecipeLogic(this, this.recipeMap, () -> {
-            return this.energyContainer;
-        }, () -> {
-            return this.importFluidHandler;
-        }, maxVoltage);
-    }
 
     /**
      * Sets the maintenance problem corresponding to index to fixed
@@ -120,8 +107,6 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
      * @param duration duration in ticks to add to the counter of active time
      */
     public void calculateMaintenance(int duration) {
-        if (getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).isEmpty())
-            return;
         MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
         if (maintenanceHatch.getType() == 2) {
             return;
@@ -139,6 +124,8 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         if (hasMaintenance) {
+            if (getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).isEmpty())
+                return;
             MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
             if (maintenanceHatch.getType() == 2) {
                 this.maintenance_problems = 0b111111;
@@ -228,98 +215,68 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
         }
     }
 
-    @Override
     protected void addDisplayText(List<ITextComponent> textList) {
-        if (this.isStructureFormed()) {
-            if (!this.workableHandler.isWorkingEnabled()) {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.work_paused"));
-            } else if (this.workableHandler.isActive()) {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.running"));
-                textList.add(new TextComponentTranslation("gregtech.multiblock.generation_eu", this.workableHandler.getRecipeOutputVoltage()));
-            } else {
-                textList.add(new TextComponentTranslation("gregtech.multiblock.idling"));
-            }
+        super.addDisplayText(textList);
+        if (this.hasProblems()) {
+            textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.has_problems")
+                    .setStyle(new Style().setColor(TextFormatting.DARK_RED)));
 
-            // Maintenance Text
-            if (hasMuffler && !isMufflerFaceFree()) {
-                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed")
+            // Wrench
+            if (((this.maintenance_problems >> 0) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench")
                         .setStyle(new Style().setColor(TextFormatting.RED)
                                 .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                        new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed.tooltip")))));
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench.tooltip")))));
+            }
 
-            } else if (this.hasProblems()) {
-                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.has_problems")
-                        .setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+            // Screwdriver
+            if (((this.maintenance_problems >> 1) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver.tooltip")))));
+            }
 
-                // Wrench
-                if (((this.maintenance_problems >> 0) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.wrench.tooltip")))));
-                }
+            // Soft Hammer
+            if (((this.maintenance_problems >> 2) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer.tooltip")))));
+            }
 
-                // Screwdriver
-                if (((this.maintenance_problems >> 1) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.screwdriver.tooltip")))));
-                }
+            // Hard Hammer
+            if (((this.maintenance_problems >> 3) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer.tooltip")))));
+            }
 
-                // Soft Hammer
-                if (((this.maintenance_problems >> 2) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.softhammer.tooltip")))));
-                }
+            // Wirecutter
+            if (((this.maintenance_problems >> 4) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter.tooltip")))));
+            }
 
-                // Hard Hammer
-                if (((this.maintenance_problems >> 3) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.hardhammer.tooltip")))));
-                }
-
-                // Wirecutter
-                if (((this.maintenance_problems >> 4) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.wirecutter.tooltip")))));
-                }
-
-                // Crowbar
-                if (((this.maintenance_problems >> 5) & 1) == 0) {
-                    textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar")
-                            .setStyle(new Style().setColor(TextFormatting.RED)
-                                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                            new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar.tooltip")))));
-                }
-            } else {
-                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.no_problems")
-                        .setStyle(new Style().setColor(TextFormatting.GREEN)));
+            // Crowbar
+            if (((this.maintenance_problems >> 5) & 1) == 0) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.problem.crowbar.tooltip")))));
             }
         } else {
-            ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
-            tooltip.setStyle(new Style().setColor(TextFormatting.GRAY));
-            textList.add(new TextComponentTranslation("gregtech.multiblock.invalid_structure")
-                    .setStyle(new Style().setColor(TextFormatting.RED)
-                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
+            textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.no_problems")
+                    .setStyle(new Style().setColor(TextFormatting.GREEN)));
         }
     }
 
     protected void outputRecoveryItems() {
         MetaTileEntityMufflerHatch muffler = getAbilities(GregicAdditionsCapabilities.MUFFLER_HATCH).get(0);
         muffler.recoverItemsTable(recoveryItems.stream().map(ItemStack::copy).collect(Collectors.toList()));
-    }
-
-    @Override
-    protected void updateFormedValid() {
-        if (!hasMuffler || isMufflerFaceFree())
-            super.updateFormedValid();
     }
 
     public boolean isMufflerFaceFree() {
@@ -332,7 +289,7 @@ public abstract class GAFueledMultiblockController extends FueledMultiblockContr
     }
 
     public boolean isActive() {
-        return isStructureFormed() && workableHandler.isActive();
+        return isStructureFormed();
     }
 
     public boolean hasMufflerHatch() {

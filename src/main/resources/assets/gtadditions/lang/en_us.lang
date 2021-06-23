@@ -2891,6 +2891,7 @@ gtadditions.multiblock.void_miner.description.2=It will consume Pyrotheum and Cr
 gtadditions.multiblock.void_miner.description.3=Temperature will increase if there is only Pyrotheum and will decrease if there is only Cryotheum.
 gtadditions.multiblock.void_miner.description.4=The First step will be to only feed with Pyrotheum and when the temperature is at the perfect spot, slowly add Cryotheum.
 gtadditions.multiblock.void_miner.description.5=If temperature is above the max temperature the Void Ore Miner will stop working and slowly cool down.
+gtadditions.multiblock.void_miner.description.6=Consumes Drilling Mud and outputs Used Drilling Mud every second at the same rate as Pyrotheum.
 gtadditions.multiblock.large_transformer.description=Large Transformer can convert any GTEU/AMPS by any GTEU/AMPS.
 gtadditions.multiblock.industrial_primitive_blast_furnace.description=The Industrial Primitive Blast Furnace is a large multiblock structure consisting of 1 to 64 "slices".
 gregtech.machine.primitive_blast_furnace.industrial.tooltip.1=It's an upgraded version of The Primitive Blast Furnace.
@@ -2924,6 +2925,7 @@ gtadditions.multiblock.hyper_reactor.tooltip.2=Max Voltage: %,d
 gtadditions.multiblock.battery_tower.tooltip.1=The Battery Tower is a large multiblock battery that can store large amounts of EU.
 gtadditions.multiblock.battery_tower.tooltip.2=All of the cells in the tower need to be of the same tier and the tower will drain %d%% of the cells' voltage tier per tick.
 gtadditions.multiblock.battery_tower.tooltip.3=The input/output hatches can not be of a higher tier than the tier of the cells.
+gtadditions.multiblock.battery_tower.tooltip.4=Each maintenance problem increases loss by 5%%.
 
 gtadditions.multiblock.cosmic_ray_detector.tooltip.1=The Cosmic Ray Detector can't see the sky!
 gtadditions.multiblock.cosmic_ray_detector.tooltip.2=Produces Heavy Lepton Mix based on the Y-level it is built at.

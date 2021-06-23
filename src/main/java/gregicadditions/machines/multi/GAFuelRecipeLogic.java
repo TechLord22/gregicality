@@ -20,7 +20,7 @@ public class GAFuelRecipeLogic extends FuelRecipeLogic {
             if (gaController.hasMaintenanceHatch()) {
                 int numMaintenanceProblems = gaController.getNumProblems();
                 System.out.println("numMaintenanceProblems " + numMaintenanceProblems);
-                double maintenanceDurationMultiplier = 1.0 - (0.1 * numMaintenanceProblems);
+                double maintenanceDurationMultiplier = 1.0 - (0.2 * numMaintenanceProblems);
                 int durationModified = (int) (currentRecipe.getDuration() * maintenanceDurationMultiplier);
 
                 gaController.calculateMaintenance(durationModified);

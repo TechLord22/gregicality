@@ -9,6 +9,7 @@ import gregicadditions.GAMaterials;
 import gregicadditions.GAUtility;
 import gregicadditions.GAValues;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
+import gregicadditions.machines.multi.GAMultiblockWithDisplayBase;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.EnergyContainerList;
@@ -24,7 +25,6 @@ import gregtech.api.multiblock.FactoryBlockPattern;
 import gregtech.api.multiblock.PatternMatchContext;
 import gregtech.api.render.ICubeRenderer;
 import gregtech.api.render.Textures;
-import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.material.type.SolidMaterial;
 import gregtech.common.blocks.MetaBlocks;
@@ -59,8 +59,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-
-public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implements Miner { //todo maintenance
+public class MetaTileEntityLargeMiner extends GAMultiblockWithDisplayBase implements Miner { //todo maintenance
 
     private static final MultiblockAbility<?>[] ALLOWED_ABILITIES = {MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.INPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_HATCH};
 
@@ -72,7 +71,6 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
     private AtomicInteger currentChunk = new AtomicInteger(0);
     private IEnergyContainer energyContainer;
     private IMultipleTankHandler importFluidHandler;
-    private IMultipleTankHandler exportFluidHandler;
     protected IItemHandlerModifiable outputInventory;
     private List<Chunk> chunks = new ArrayList<>();
     private boolean isActive = false;
@@ -106,14 +104,12 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
 
     private void initializeAbilities() {
         this.importFluidHandler = new FluidTankList(true, getAbilities(MultiblockAbility.IMPORT_FLUIDS));
-        this.exportFluidHandler = new FluidTankList(true, getAbilities(MultiblockAbility.EXPORT_FLUIDS));
         this.outputInventory = new ItemHandlerList(getAbilities(MultiblockAbility.EXPORT_ITEMS));
         this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.INPUT_ENERGY));
     }
 
     private void resetTileAbilities() {
         this.importFluidHandler = new FluidTankList(true);
-        this.exportFluidHandler = new FluidTankList(true);
         this.outputInventory = new ItemStackHandler(0);
         this.energyContainer = new EnergyContainerList(Lists.newArrayList());
     }
@@ -121,13 +117,10 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
     public boolean drainEnergy() {
         long energyDrain = GAValues.V[Math.max(GAValues.EV, GAUtility.getTierByVoltage(energyContainer.getInputVoltage()))];
         FluidStack drillingMud = GAMaterials.DrillingMud.getFluid(type.drillingFluidConsumePerTick);
-        FluidStack usedDrillingMud = GAMaterials.UsedDrillingMud.getFluid(type.drillingFluidConsumePerTick);
         FluidStack canDrain = importFluidHandler.drain(drillingMud, false);
-        int canFill = exportFluidHandler.fill(usedDrillingMud, false);
-        if (energyContainer.getEnergyStored() >= energyDrain && canDrain != null && canDrain.amount == type.drillingFluidConsumePerTick && canFill != 0) {
+        if (energyContainer.getEnergyStored() >= energyDrain && canDrain != null && canDrain.amount == type.drillingFluidConsumePerTick) {
             energyContainer.removeEnergy(energyContainer.getInputVoltage());
             importFluidHandler.drain(drillingMud, true);
-            exportFluidHandler.fill(usedDrillingMud, true);
             return true;
         }
         return false;
@@ -208,7 +201,7 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
             }
 
 
-            if (!getWorld().isRemote && getTimer() % 5 == 0) {
+            if (!getWorld().isRemote && getOffsetTimer() % 5 == 0) {
                 pushItemsIntoNearbyHandlers(getFrontFacing());
             }
         }
@@ -264,8 +257,6 @@ public class MetaTileEntityLargeMiner extends MultiblockWithDisplayBase implemen
             textList.add(new TextComponentTranslation("gregtech.multiblock.large_miner.mode"));
             if (done)
                 textList.add(new TextComponentTranslation("gregtech.multiblock.large_miner.done", getNbBlock()).setStyle(new Style().setColor(TextFormatting.GREEN)));
-
-
         }
 
         super.addDisplayText(textList);

@@ -129,6 +129,8 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * @param duration duration in ticks to add to the counter of active time
      */
     public void calculateMaintenance(int duration) {
+        if (getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).isEmpty())
+            return;
         MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
         if (maintenanceHatch.getType() == 2) {
             return;
@@ -170,6 +172,8 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     @Override
     public void invalidateStructure() {
         if (hasMaintenance) {
+            if (getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).isEmpty())
+                return;
             MetaTileEntityMaintenanceHatch maintenance = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
             if (maintenance.getType() != 2)
                 maintenance.storeMaintenanceData(maintenance_problems, timeActive);
