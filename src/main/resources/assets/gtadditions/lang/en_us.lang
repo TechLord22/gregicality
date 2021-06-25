@@ -336,7 +336,7 @@ metaitem.small_turbine_rotor.name=%s Small Turbine Rotor
 metaitem.medium_turbine_rotor.name=%s Medium Turbine Rotor
 metaitem.large_turbine_rotor.name=%s Large Turbine Rotor
 metaitem.huge_turbine_rotor.name=%s Huge Turbine Rotor
-metaitem.insulating_tape.name=Duct Tape
+metaitem.insulating_tape.name=BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84
 
 metaitem.liquid_fuel_jetpack.name=§eLiquid fuel jetpack
 metaitem.impeller_jetpack.name=§eThruster Jetpack
