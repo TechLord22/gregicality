@@ -362,11 +362,6 @@ public class GAConfig {
         @Config.RequiresMcRestart
         public boolean rocketEfficiency = true;
 
-        @Config.Comment("Whether or not to add diminishing returns for the Large Rocket Engine")
-        @Config.Name("Large Rocket Engine efficiency loss")
-        @Config.RequiresMcRestart
-        public boolean largeRocketEfficiency = true;
-
 
 
         @Config.Comment("Whether or not to add diminishing returns for Gregicality Naquadah Reactors. Does not affect the Large Nauqadah Reactor")
