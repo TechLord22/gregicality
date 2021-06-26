@@ -46,6 +46,8 @@ public class GAMultiblockShapeInfo extends MultiblockShapeInfo {
         private List<String[]> shape = new ArrayList<>();
         private Map<Character, BlockInfo> symbolMap = new HashMap<>();
         private BlockPattern.RelativeDirection[] structureDir = new BlockPattern.RelativeDirection[3];
+        private final BlockPattern.RelativeDirection[] idealDir = {RIGHT, UP, FRONT};
+
 
         public Builder(BlockPattern.RelativeDirection charDir, BlockPattern.RelativeDirection stringDir, BlockPattern.RelativeDirection aisleDir) {
             this.structureDir[0] = charDir;
@@ -117,8 +119,12 @@ public class GAMultiblockShapeInfo extends MultiblockShapeInfo {
 
                             positionData = new BlockInfo(positionData.getBlockState(), newHolder);
                         }
-                        Triple<Integer, Integer, Integer> blockInfoPosition = transformPos(i, j, k, shape.size(), aisleEntry.length, rowEntry.length(), true);
-                        blockInfos[blockInfoPosition.getLeft()][blockInfoPosition.getMiddle()][blockInfoPosition.getRight()] = positionData;
+                        if (idealDir != structureDir) {
+                            Triple<Integer, Integer, Integer> blockInfoPosition = transformPos(i, j, k, shape.size(), aisleEntry.length, rowEntry.length(), true);
+                            blockInfos[blockInfoPosition.getLeft()][blockInfoPosition.getMiddle()][blockInfoPosition.getRight()] = positionData;
+                        } else {
+                            blockInfos[i][j][k] = positionData;
+                        }
                     }
                 }
             }
@@ -134,7 +140,7 @@ public class GAMultiblockShapeInfo extends MultiblockShapeInfo {
             // First pass: swap all lefts, downs, and backs to their corresponding opposite sides.
             for (int i = 0; i < 3; i++) {
                 if (currentDir[i] == LEFT || currentDir[i] == DOWN || currentDir[i] == BACK) {
-                    if(canReverseLines) {
+                    if (canReverseLines) {
                         position[i] = bounds[i] - position[i];
                     }
                     switch (currentDir[i]) {
@@ -153,7 +159,6 @@ public class GAMultiblockShapeInfo extends MultiblockShapeInfo {
             }
 
             // Second pass: check the first and second elements to see if they're the correct directions for their particular position, and if not, swap them.
-            BlockPattern.RelativeDirection[] idealDir = {RIGHT, UP, FRONT};
             for (int i = 0; i < 2; i++) {
                 if (currentDir[i] != idealDir[i]) {
                     for (int j = i; j < 3; j++) {

@@ -60,6 +60,6 @@ public class MegaDistillationTowerInfo extends MultiblockInfoPage {
 
     @Override
     public float getDefaultZoom() {
-        return 0.9f;
+        return 0.4f;
     }
 }
