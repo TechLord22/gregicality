@@ -17,10 +17,10 @@ import net.minecraft.util.EnumFacing;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LargeChemicalReactorInfo extends MultiblockInfoPage {
+public class AdvancedChemicalReactorInfo extends MultiblockInfoPage {
 	@Override
 	public MultiblockControllerBase getController() {
-		return GATileEntities.LARGE_CHEMICAL_REACTOR;
+		return GATileEntities.ADVANCED_CHEMICAL_REACTOR;
 	}
 
 	@Override
@@ -28,9 +28,11 @@ public class LargeChemicalReactorInfo extends MultiblockInfoPage {
 		ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
 		for (BlockWireCoil.CoilType coilType : BlockWireCoil.CoilType.values()) {
 			shapeInfo.add(MultiblockShapeInfo.builder()
-					.aisle("XXX", "XEX", "XXX")
-					.aisle("IXX", "XPX", "XCX")
-					.aisle("OMX", "XSX", "XHX")
+					.aisle("X###X", "EXXXX", "X###X", "XXXXX", "X###X")
+					.aisle("XXXXX", "XCCCX", "XPPPX", "XCCCX", "XXXXX")
+					.aisle("X###X", "XPPPX", "XMMMX", "XPPPX", "X###X")
+					.aisle("XXXXX", "XCCCX", "XPPPX", "XCCCX", "XXXXX")
+					.aisle("H###X", "SXXIO", "X###X", "XXXXX", "X###X")
 					.where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.NORTH)
 					.where('S', GATileEntities.LARGE_CHEMICAL_REACTOR, EnumFacing.SOUTH)
 					.where('H', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.SOUTH)
@@ -44,12 +46,11 @@ public class LargeChemicalReactorInfo extends MultiblockInfoPage {
 					.build());
 		}
 
-
 		return Lists.newArrayList(shapeInfo);
 	}
 
 	@Override
 	public String[] getDescription() {
-		return new String[]{};
+		return new String[]{"Must have at least 22 chemically inert casings to form!"};
 	}
 }
