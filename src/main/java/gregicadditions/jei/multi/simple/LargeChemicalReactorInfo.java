@@ -32,7 +32,7 @@ public class LargeChemicalReactorInfo extends MultiblockInfoPage {
 					.aisle("IXX", "XPX", "XCX")
 					.aisle("OMX", "XSX", "XHX")
 					.where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.NORTH)
-					.where('S', GATileEntities.LARGE_CHEMICAL_REACTOR, EnumFacing.SOUTH)
+					.where('S', GATileEntities.ADVANCED_CHEMICAL_REACTOR, EnumFacing.SOUTH)
 					.where('H', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.SOUTH)
 					.where('X', GAMetaBlocks.MUTLIBLOCK_CASING.getState(GAMultiblockCasing.CasingType.CHEMICALLY_INERT))
 					.where('#', Blocks.AIR.getDefaultState())

@@ -53,7 +53,7 @@ public class TileEntityLargeForgeHammer extends MultiRecipeMapMultiblockControll
         return FactoryBlockPattern.start()
                 .aisle("XXX", "X#X", "XPX", "XpX").setRepeatable(0, 4)
                 .aisle("SXX", "X#X", "XPX", "XpX")
-                .setAmountAtLeast('Y', 3)
+                .setAmountAtLeast('Y', 2)
                 .where('S', selfPredicate())
                 .where('Y', statePredicate(getCasingState()))
                 .where('X', statePredicate(getCasingState()).or(abilityPartPredicate(ALLOWED_ABILITIES)))

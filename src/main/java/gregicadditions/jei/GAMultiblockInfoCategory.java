@@ -120,6 +120,8 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
                 add(new MultiblockInfoRecipeWrapper(new AdvancedChemicalReactorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new LargeElectromagnetInfo()));
                 add(new MultiblockInfoRecipeWrapper(new LargeExtractorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeMassFabricatorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeReplicatorInfo()));
             }
         };
 
