@@ -79,11 +79,11 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
 
     public MetaTileEntityMaintenanceHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
+        this.initializeInventory();
+
         if (tier == 9) type = 2;
         else if (tier == 5) type = 1;
         else type = 0;
-
-        this.initializeInventory();
     }
 
     @Override
@@ -106,6 +106,7 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
         }
     }
 
+    //todo don't accept items if not type 1 (currently doesn't work)
     @Override
     protected IItemHandlerModifiable createImportItemHandler() {
         if (this.type != 1)
@@ -118,6 +119,13 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
         if (this.type != 1)
             return super.createExportItemHandler();
         return new ItemStackHandler(1);
+    }
+
+    @Override
+    protected void initializeInventory() {
+        super.initializeInventory();
+        this.inventory = new ItemStackHandler(1);
+        this.itemInventory = this.inventory;
     }
 
     public void setTaped(boolean isTaped) {
