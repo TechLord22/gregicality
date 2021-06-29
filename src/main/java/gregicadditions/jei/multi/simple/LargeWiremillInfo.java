@@ -29,11 +29,11 @@ public class LargeWiremillInfo extends MultiblockInfoPage {
 		ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
 		for (int i = 2; i < 7; i++) {
 			MultiblockShapeInfo.Builder builder = MultiblockShapeInfo.builder()
-					.aisle("XXXX", "XXXX", "XXXX");
+					.aisle("XXXXX", "XXXXX", "XXXXX");
 			for(int j = 0; j < i; j++) {
-				builder.aisle("IXXX", "XGMX", "OXXX");
+				builder.aisle("IXXXX", "XMGMX", "OXXXX");
 			}
-			builder.aisle("XH##", "XS##", "EX##")
+			builder.aisle("XHX##", "XSX##", "EXX##")
 					.where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.WEST)
 					.where('S', GATileEntities.LARGE_WIREMILL, EnumFacing.SOUTH)
 					.where('H', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.SOUTH)

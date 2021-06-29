@@ -61,13 +61,11 @@ public class TileEntityLargeCanningMachine extends MultiRecipeMapMultiblockContr
                 .aisle("XXX", "XpX", "XXX").setRepeatable(2, 8)
                 .aisle("PPP", "PSP", "PPP")
                 .setAmountAtLeast('L', 8)
-                .setAmountAtLeast('M', 7)
                 .where('S', selfPredicate())
                 .where('L', statePredicate(getCasingState()))
                 .where('X', statePredicate(getCasingState()).or(abilityPartPredicate(ALLOWED_ABILITIES)))
                 .where('p', pumpPredicate())
-                .where('P', statePredicate(MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.STEEL_PIPE)).or(abilityPartPredicate(ALLOWED_ABILITIES)))
-                .where('M', statePredicate(MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.STEEL_PIPE)))
+                .where('P', statePredicate(MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.STEEL_PIPE)))
                 .build();
     }
 

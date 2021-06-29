@@ -27,7 +27,7 @@ public class MegaVacuumFreezerInfo extends MultiblockInfoPage {
     }
 
     @Override
-    public List<MultiblockShapeInfo> getMatchingShapes() { //TODO change pattern to have the controller face the viewer in jei
+    public List<MultiblockShapeInfo> getMatchingShapes() { //TODO change pattern to have the controller face the viewer in jei, fix integral frameworks per page
         ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
         for (BlockWireCoil.CoilType coilType : BlockWireCoil.CoilType.values()) {
             GAMultiblockShapeInfo.Builder builder = GAMultiblockShapeInfo.builder();

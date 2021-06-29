@@ -1,6 +1,8 @@
 package gregicadditions.jei.multi;
 
 import gregicadditions.GAValues;
+import gregicadditions.item.GAHeatingCoil;
+import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.item.metal.MetalCasing1;
 import gregicadditions.item.metal.MetalCasing2;
 import gregicadditions.jei.GAMultiblockShapeInfo;
@@ -29,9 +31,11 @@ public class AlloyBlastFurnaceInfo extends MultiblockInfoPage {
     @Override
     public List<MultiblockShapeInfo> getMatchingShapes() {
         List<MultiblockShapeInfo> shape = new ArrayList<>();
-        GAMultiblockShapeInfo.Builder builder = GAMultiblockShapeInfo.builder();
         for (BlockWireCoil.CoilType coilType : BlockWireCoil.CoilType.values()) {
-            shape.add(builder.aisle("#EXX#", "#ccc#", "#ccc#", "#XXX#")
+            if (coilType.equals(BlockWireCoil.CoilType.SUPERCONDUCTOR) || coilType.equals(BlockWireCoil.CoilType.FUSION_COIL))
+                continue;
+
+            shape.add(GAMultiblockShapeInfo.builder().aisle("#EXX#", "#ccc#", "#ccc#", "#XXX#")
                     .aisle("MXXXX", "cCCCc", "cCCCc", "XXXXX")
                     .aisle("SXXXO", "cCACc", "cCACc", "XXmXX")
                     .aisle("IXXXX", "cCCCc", "cCCCc", "XXXXX")
@@ -47,6 +51,25 @@ public class AlloyBlastFurnaceInfo extends MultiblockInfoPage {
                     .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.EV], EnumFacing.EAST)
                     .build());
         }
+        for (GAHeatingCoil.CoilType coilType : GAHeatingCoil.CoilType.values()) {
+
+            shape.add(GAMultiblockShapeInfo.builder().aisle("#EXX#", "#ccc#", "#ccc#", "#XXX#")
+                    .aisle("MXXXX", "cCCCc", "cCCCc", "XXXXX")
+                    .aisle("SXXXO", "cCACc", "cCACc", "XXmXX")
+                    .aisle("IXXXX", "cCCCc", "cCCCc", "XXXXX")
+                    .aisle("#OXX#", "#ccc#", "#ccc#", "#XXX#")
+                    .where('O', MetaTileEntities.FLUID_EXPORT_HATCH[4], EnumFacing.WEST)
+                    .where('I', MetaTileEntities.ITEM_IMPORT_BUS[4], EnumFacing.WEST)
+                    .where('S', GATileEntities.ALLOY_BLAST_FURNACE, EnumFacing.WEST)
+                    .where('M', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.WEST)
+                    .where('C', GAMetaBlocks.HEATING_COIL.getState(coilType))
+                    .where('c', METAL_CASING_2.getState(MetalCasing2.CasingType.STABALLOY))
+                    .where('X', METAL_CASING_1.getState(MetalCasing1.CasingType.ZIRCONIUM_CARBIDE))
+                    .where('m', GATileEntities.MUFFLER_HATCH[GAValues.HV], EnumFacing.UP)
+                    .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.EV], EnumFacing.EAST)
+                    .build());
+        }
+
         return shape;
     }
 

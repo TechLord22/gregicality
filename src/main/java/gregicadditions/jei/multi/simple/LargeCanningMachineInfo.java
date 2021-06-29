@@ -29,7 +29,7 @@ public class LargeCanningMachineInfo extends MultiblockInfoPage {
         ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
         for (int i = 2; i < 9; i++) {
             MultiblockShapeInfo.Builder builder = MultiblockShapeInfo.builder()
-                    .aisle("XXX", "XEX", "XXX");
+                    .aisle("XHX", "XEX", "XXX");
             for (int j = 0; j < i; j++) {
                 builder.aisle("IXi", "XpX", "OXo");
             }

@@ -31,6 +31,9 @@ public class LargeThermalCentrifugeInfo extends MultiblockInfoPage {
     public List<MultiblockShapeInfo> getMatchingShapes() {
         ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
         for (BlockWireCoil.CoilType coilType : BlockWireCoil.CoilType.values()) {
+            if (coilType.equals(BlockWireCoil.CoilType.SUPERCONDUCTOR) || coilType.equals(BlockWireCoil.CoilType.FUSION_COIL))
+                continue;
+
             shapeInfo.add(MultiblockShapeInfo.builder()
                     .aisle("#XXX#", "#XGX#", "#XXX#", "#####")
                     .aisle("XXXXX", "XCCCX", "X###X", "#XXX#")

@@ -45,8 +45,8 @@ public class TileEntityLargeMixer extends LargeSimpleRecipeMapMultiblockControll
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("AXXXA", "AXXXA", "AXXXA")
-                .aisle("XXXXX", "X#M#X", "AXXXA")
-                .aisle("XXXXX", "X#Y#X", "AXXXA").setRepeatable(2, 4)
+                .aisle("XXXXX", "X#M#X", "AXXXA").setRepeatable(2, 4)
+                .aisle("XXXXX", "X#Y#X", "AXXXA")
                 .aisle("AXXXA", "AXSXA", "AXXXA")
                 .setAmountAtLeast('L', 9)
                 .where('S', selfPredicate())
