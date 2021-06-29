@@ -2,11 +2,14 @@ package gregicadditions.jei.multi.simple;
 
 import com.google.common.collect.Lists;
 import gregicadditions.GAValues;
+import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.item.GAMultiblockCasing;
 import gregicadditions.machines.GATileEntities;
 import gregicadditions.machines.multi.simple.TileEntityLargeThermalCentrifuge;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
+import gregtech.common.blocks.BlockBoilerCasing;
+import gregtech.common.blocks.BlockMultiblockCasing;
 import gregtech.common.blocks.BlockWireCoil;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.MetaTileEntities;
@@ -29,9 +32,9 @@ public class LargeThermalCentrifugeInfo extends MultiblockInfoPage {
         ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
         for (BlockWireCoil.CoilType coilType : BlockWireCoil.CoilType.values()) {
             shapeInfo.add(MultiblockShapeInfo.builder()
-                    .aisle("#XXX#", "#XHX#", "#XXX#", "#####")
+                    .aisle("#XXX#", "#XGX#", "#XXX#", "#####")
                     .aisle("XXXXX", "XCCCX", "X###X", "#XXX#")
-                    .aisle("XXMXX", "HCPCH", "X#P#X", "#XHX#")
+                    .aisle("XXMXX", "GCPCG", "X#P#X", "#XmX#")
                     .aisle("XXXXX", "XCCCX", "X###X", "#XXX#")
                     .aisle("#XHX#", "#XSX#", "#IEO#", "#####")
                     .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.NORTH)
@@ -42,8 +45,10 @@ public class LargeThermalCentrifugeInfo extends MultiblockInfoPage {
                     .where('I', MetaTileEntities.ITEM_IMPORT_BUS[GAValues.LV], EnumFacing.SOUTH)
                     .where('O', MetaTileEntities.ITEM_EXPORT_BUS[GAValues.LV], EnumFacing.SOUTH)
                     .where('M', GAMetaBlocks.MOTOR_CASING.getDefaultState())
-                    .where('P', GAMetaBlocks.MUTLIBLOCK_CASING.getState(GAMultiblockCasing.CasingType.PTFE_PIPE))
+                    .where('m', GATileEntities.MUFFLER_HATCH[GAValues.HV], EnumFacing.UP)
+                    .where('P', MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.TITANIUM_PIPE))
                     .where('C', MetaBlocks.WIRE_COIL.getState(coilType))
+                    .where('G', MetaBlocks.MUTLIBLOCK_CASING.getState(BlockMultiblockCasing.MultiblockCasingType.GRATE_CASING))
                     .build());
         }
 

@@ -34,7 +34,7 @@ public class AdvancedChemicalReactorInfo extends MultiblockInfoPage {
 					.aisle("XXXXX", "XCCCX", "XPPPX", "XCCCX", "XXXXX")
 					.aisle("H###X", "SXXIO", "X###X", "XXXXX", "X###X")
 					.where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.NORTH)
-					.where('S', GATileEntities.LARGE_CHEMICAL_REACTOR, EnumFacing.SOUTH)
+					.where('S', GATileEntities.ADVANCED_CHEMICAL_REACTOR, EnumFacing.SOUTH)
 					.where('H', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.SOUTH)
 					.where('X', GAMetaBlocks.MUTLIBLOCK_CASING.getState(GAMultiblockCasing.CasingType.CHEMICALLY_INERT))
 					.where('#', Blocks.AIR.getDefaultState())

@@ -27,22 +27,21 @@ public class LargeForgeHammerInfo extends MultiblockInfoPage {
     @Override
     public List<MultiblockShapeInfo> getMatchingShapes() {
         ArrayList<MultiblockShapeInfo> shapeInfo = new ArrayList<>();
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             MultiblockShapeInfo.Builder builder = MultiblockShapeInfo.builder();
-            for(int j = 0; j < i; j++) {
-                builder.aisle("XXO", "X#X", "IPX", "XpX");
+            builder.aisle("OXS", "E#M", "IPX", "FpX");
+            for (int j = 0; j < i; j++) {
+                builder.aisle("OXX", "X#X", "IPX", "XpX");
             }
-            builder.aisle("SBO", "E#M", "IPX", "FpX")
-                    .where('S', GATileEntities.LARGE_FORGE_HAMMER, EnumFacing.SOUTH)
+            builder.where('S', GATileEntities.LARGE_FORGE_HAMMER, EnumFacing.NORTH)
                     .where('X', TileEntityLargeForgeHammer.casingState)
-                    .where('M', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.SOUTH)
-                    .where('B', Blocks.IRON_BLOCK.getDefaultState())
+                    .where('M', GATileEntities.MAINTENANCE_HATCH[0], EnumFacing.NORTH)
                     .where('P', Blocks.PISTON.getDefaultState().withProperty(FACING, EnumFacing.DOWN))
                     .where('#', Blocks.AIR.getDefaultState())
                     .where('I', MetaTileEntities.ITEM_IMPORT_BUS[GAValues.HV], EnumFacing.WEST)
                     .where('E', MetaTileEntities.ENERGY_INPUT_HATCH[GAValues.HV], EnumFacing.WEST)
                     .where('F', MetaTileEntities.FLUID_IMPORT_HATCH[GAValues.EV], EnumFacing.WEST)
-                    .where('O', MetaTileEntities.ITEM_EXPORT_BUS[GAValues.LV], EnumFacing.EAST)
+                    .where('O', MetaTileEntities.ITEM_EXPORT_BUS[GAValues.LV], EnumFacing.WEST)
                     .where('p', GAMetaBlocks.PISTON_CASING.getDefaultState());
             shapeInfo.add(builder.build());
         }
