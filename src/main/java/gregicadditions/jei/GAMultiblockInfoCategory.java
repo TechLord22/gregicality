@@ -2,6 +2,9 @@ package gregicadditions.jei;
 
 import gregicadditions.jei.multi.*;
 import gregicadditions.jei.multi.advance.*;
+import gregicadditions.jei.multi.mega.MegaDistillationTowerInfo;
+import gregicadditions.jei.multi.mega.MegaBlastFurnaceInfo;
+import gregicadditions.jei.multi.mega.MegaVacuumFreezerInfo;
 import gregicadditions.jei.multi.miner.LargeMinerInfo;
 import gregicadditions.jei.multi.miner.VoidMinerInfo;
 import gregicadditions.jei.multi.miner.VoidMinerInfo2;
@@ -108,6 +111,17 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
                 add(new MultiblockInfoRecipeWrapper(new SteamOvenInfo()));
                 add(new MultiblockInfoRecipeWrapper(new CosmicRayDetectorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new ElectricImplosionInfo()));
+                add(new MultiblockInfoRecipeWrapper(new MegaDistillationTowerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new MegaBlastFurnaceInfo()));
+                add(new MultiblockInfoRecipeWrapper(new MegaVacuumFreezerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeArcFurnaceInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeBreweryInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeCanningMachineInfo()));
+                add(new MultiblockInfoRecipeWrapper(new AdvancedChemicalReactorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeElectromagnetInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeExtractorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeMassFabricatorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeReplicatorInfo()));
             }
         };
 
