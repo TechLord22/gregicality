@@ -151,7 +151,8 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
 
     @Override
     public void clearMachineInventory(NonNullList<ItemStack> itemBuffer) {
-        clearInventory(itemBuffer, this.inventory);
+        if(type == 1)
+            clearInventory(itemBuffer, this.inventory);
     }
 
     /**
@@ -336,7 +337,8 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
-        data.setTag("Inventory", this.inventory.serializeNBT()); //todo (major) this causes an NPE and ExecutionException when breaking a hatch that has a controller attached to it
+        if(type == 1)
+            data.setTag("Inventory", this.inventory.serializeNBT());
         data.setBoolean("Taped", this.isTaped);
         return data;
     }
@@ -344,7 +346,8 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.inventory.deserializeNBT(data.getCompoundTag("Inventory"));
+        if(type == 1)
+            this.inventory.deserializeNBT(data.getCompoundTag("Inventory"));
         this.isTaped = data.getBoolean("Taped");
     }
 
