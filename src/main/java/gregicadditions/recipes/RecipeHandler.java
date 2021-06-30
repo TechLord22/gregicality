@@ -1,7 +1,7 @@
 package gregicadditions.recipes;
 
 import gregicadditions.GAConfig;
-import gregicadditions.GAValues;
+import gregicadditions.fluid.GAMetaFluids;
 import gregicadditions.item.GAExplosive;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.materials.SimpleDustMaterialStack;
@@ -1141,14 +1141,31 @@ public class RecipeHandler {
                         ItemStack itemStack = recipe.getOutputs().get(0);
                         IngotMaterial ingot = ((IngotMaterial) (OreDictUnifier.getUnificationEntry(itemStack).material));
                         int duration = Math.max(1, (int) (ingot.getAverageMass() * ingot.blastFurnaceTemperature / 100));
-                        BLAST_ALLOY_RECIPES.recipeBuilder()
-                                .duration(duration * 50 / 100)
-                                .EUt(30 * ingot.blastFurnaceTemperature / 100)
-                                .fluidInputs(recipe.getFluidInputs())
-                                .inputsIngredients(recipe.getInputs())
-                                .fluidOutputs(ingot.getFluid(itemStack.getCount() * GTValues.L))
-                                .blastFurnaceTemp(ingot.blastFurnaceTemperature)
-                                .buildAndRegister();
+                        if(ingot.blastFurnaceTemperature <= 1750) {
+                            BLAST_ALLOY_RECIPES.recipeBuilder()
+                                    .duration(duration * 50 / 100)
+                                    .EUt(30 * ingot.blastFurnaceTemperature / 100)
+                                    .fluidInputs(recipe.getFluidInputs())
+                                    .inputsIngredients(recipe.getInputs())
+                                    .fluidOutputs(ingot.getFluid(itemStack.getCount() * GTValues.L))
+                                    .blastFurnaceTemp(ingot.blastFurnaceTemperature)
+                                    .buildAndRegister();
+                        } else {
+                            BLAST_ALLOY_RECIPES.recipeBuilder()
+                                    .duration(duration * 50 / 100)
+                                    .EUt(30 * ingot.blastFurnaceTemperature / 100)
+                                    .fluidInputs(recipe.getFluidInputs())
+                                    .inputsIngredients(recipe.getInputs())
+                                    .fluidOutputs(GAMetaFluids.getMoltenFluid(ingotMaterial, GTValues.L))
+                                    .blastFurnaceTemp(ingot.blastFurnaceTemperature)
+                                    .buildAndRegister();
+                            VACUUM_RECIPES.recipeBuilder()
+                                    .duration((int) (material.getAverageMass() * 5))
+                                    .EUt(30 * ingot.blastFurnaceTemperature / 100)
+                                    .fluidInputs(GAMetaFluids.getMoltenFluid(ingotMaterial, GTValues.L))
+                                    .fluidOutputs(ingot.getFluid(GTValues.L))
+                                    .buildAndRegister();
+                        }
                     });
         }
 
